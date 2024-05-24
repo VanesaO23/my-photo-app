@@ -1,28 +1,28 @@
 <script>
 	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
+	import welcome from '$lib/images/pexels-olly-2.jpg';
+	import welcome_fallback from '$lib/images/pexels-pixabay-276514.jpg';
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+	<title>Inicio</title>
+	<meta name="description" content="Upload photos app" />
 </svelte:head>
 
 <section>
 	<h1>
 		<span class="welcome">
 			<picture>
-				<source srcset={welcome} type="image/webp" />
+				<source srcset={welcome} type="image/jpg" />
 				<img src={welcome_fallback} alt="Welcome" />
 			</picture>
 		</span>
 
-		to your new<br />SvelteKit app
+		<br /> Bienvenido a tu espacio creativo.
 	</h1>
 
 	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
+		Sube y organiza tus fotos de una forma <strong>divertida</strong>
 	</h2>
 
 	<Counter />
@@ -50,10 +50,13 @@
 	}
 
 	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
+  position: absolute;
+  width: 50%; /* Ajusta el ancho como necesites */
+  height: auto; /* Esto mantendrá la proporción de la imagen */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  z-index: -1; /* Coloca la imagen detrás de otros elementos */
+}
 </style>

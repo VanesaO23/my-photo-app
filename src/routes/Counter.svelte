@@ -1,106 +1,65 @@
-<script>
-	import { spring } from 'svelte/motion';
-
-	let count = 0;
-
-	const displayed_count = spring();
-	$: displayed_count.set(count);
-	$: offset = modulo($displayed_count, 1);
-
-	/**
-	 * @param {number} n
-	 * @param {number} m
-	 */
-	function modulo(n, m) {
-		// handle negative numbers
-		return ((n % m) + m) % m;
+<script lang="ts">
+	function handleFileSelect() {
+	  const fileInput = document.createElement('input');
+	  fileInput.type = 'file';
+	  fileInput.accept = 'image/*';  // Acepta solo imágenes
+	  fileInput.multiple = true;    // Permite seleccionar múltiples archivos
+	  fileInput.onchange = (e) => {
+		// Asegurar que e.target es un HTMLInputElement antes de acceder a .files
+		const target = e.target as HTMLInputElement;
+		if (target && target.files) {
+		  const files = Array.from(target.files);
+		  console.log(files); // Aquí puedes manejar los archivos seleccionados
+		} else {
+		  console.error('No se pudieron obtener los archivos');
+		}
+	  };
+	  fileInput.click();  // Abre el diálogo para seleccionar archivos
 	}
-</script>
-
-<div class="counter">
-	<button on:click={() => (count -= 1)} aria-label="Decrease the counter by one">
-		<svg aria-hidden="true" viewBox="0 0 1 1">
-			<path d="M0,0.5 L1,0.5" />
-		</svg>
+  </script>
+  
+  <!-- Otros elementos de tu componente aquí -->  
+  
+  <div class="counter">
+	<button on:click={handleFileSelect} aria-label="Add photos">
+	  <svg aria-hidden="true" viewBox="0 0 1 1">
+		<path d="M0,0.5 L1,0.5 M0.5,0 L0.5,1" />
+	  </svg>
+	  Añadir Fotos
 	</button>
-
-	<div class="counter-viewport">
-		<div class="counter-digits" style="transform: translate(0, {100 * offset}%)">
-			<strong class="hidden" aria-hidden="true">{Math.floor($displayed_count + 1)}</strong>
-			<strong>{Math.floor($displayed_count)}</strong>
-		</div>
-	</div>
-
-	<button on:click={() => (count += 1)} aria-label="Increase the counter by one">
-		<svg aria-hidden="true" viewBox="0 0 1 1">
-			<path d="M0,0.5 L1,0.5 M0.5,0 L0.5,1" />
-		</svg>
-	</button>
-</div>
-
-<style>
+  </div>
+  
+  <style>
 	.counter {
-		display: flex;
-		border-top: 1px solid rgba(0, 0, 0, 0.1);
-		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-		margin: 1rem 0;
+	  display: flex;
+	  justify-content: center;
+	  margin: 2rem 0;
 	}
-
+  
 	.counter button {
-		width: 2em;
-		padding: 0;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border: 0;
-		background-color: transparent;
-		touch-action: manipulation;
-		font-size: 2rem;
+	  padding: 0.5em 1em;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  border: 2px solid #ccc;
+	  background-color: #fff;
+	  font-size: 1rem;
+	  cursor: pointer;
 	}
-
+  
 	.counter button:hover {
-		background-color: var(--color-bg-1);
+	  background-color: var(--color-bg-1);
 	}
-
+  
 	svg {
-		width: 25%;
-		height: 25%;
+	  width: 1em;
+	  height: 1em;
+	  margin-right: 0.5em;
 	}
-
+  
 	path {
-		vector-effect: non-scaling-stroke;
-		stroke-width: 2px;
-		stroke: #444;
+	  stroke-width: 2px;
+	  stroke: currentColor;
 	}
-
-	.counter-viewport {
-		width: 8em;
-		height: 4em;
-		overflow: hidden;
-		text-align: center;
-		position: relative;
-	}
-
-	.counter-viewport strong {
-		position: absolute;
-		display: flex;
-		width: 100%;
-		height: 100%;
-		font-weight: 400;
-		color: var(--color-theme-1);
-		font-size: 4rem;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.counter-digits {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-	}
-
-	.hidden {
-		top: -100%;
-		user-select: none;
-	}
-</style>
+  </style>
+  

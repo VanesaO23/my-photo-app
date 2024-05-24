@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150">
+  <title>photography-logo</title>
+  <!-- Fondo del logo -->
+  <rect x="0" y="0" width="150" height="150" rx="15" ry="15" style="fill:#333;"/>
+  <!-- Cuerpo de la cámara -->
+  <rect x="25" y="40" rx="10" ry="10" width="100" height="60" style="fill:#666; stroke:#fff; stroke-width:2;"/>
+  <!-- Lente de la cámara -->
+  <circle cx="75" cy="70" r="20" style="fill:#222; stroke:#fff; stroke-width:3;"/>
+  <circle cx="75" cy="70" r="10" style="fill:#bbb;"/>
+  <!-- Parte superior de la cámara -->
+  <rect x="35" y="30" width="80" height="10" style="fill:#444; stroke:#fff; stroke-width:1;"/>
+  <!-- Botón de disparo -->
+  <circle cx="100" cy="35" r="5" style="fill:#bbb;"/>
+  <!-- Detalle en la parte superior de la cámara -->
+  <rect x="60" y="25" width="30" height="5" style="fill:#bbb;"/>
+  <!-- Texto debajo de la cámara -->
+  <text x="75" y="120" font-family="Arial" font-size="12" text-anchor="middle" fill="#fff">PHOTOGRAPHY</text>
+</svg>

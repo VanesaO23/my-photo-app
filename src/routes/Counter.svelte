@@ -18,8 +18,6 @@
 	}
   </script>
   
-  <!-- Otros elementos de tu componente aquí -->  
-  
   <div class="counter">
 	<button on:click={handleFileSelect} aria-label="Add photos">
 	  <svg aria-hidden="true" viewBox="0 0 1 1">

@@ -1,5 +1,4 @@
 <script>
-	import Counter from './Counter.svelte';
 	import welcome from '$lib/images/pexels-olly-2.jpg';
 	import welcome_fallback from '$lib/images/pexels-pixabay-276514.jpg';
 </script>
@@ -24,8 +23,6 @@
 	<h2>
 		Sube y organiza tus fotos de una forma <strong>divertida</strong>
 	</h2>
-
-	<Counter />
 </section>
 
 <style>
@@ -50,13 +47,13 @@
 	}
 
 	.welcome img {
-  position: absolute;
-  width: 50%; /* Ajusta el ancho como necesites */
-  height: auto; /* Esto mantendrá la proporción de la imagen */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: block;
-  z-index: -1; /* Coloca la imagen detrás de otros elementos */
-}
+		position: absolute;
+		width: 50%; /* Ajusta el ancho como necesites */
+		height: auto; /* Esto mantendrá la proporción de la imagen */
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		display: block;
+		z-index: -1; /* Coloca la imagen detrás de otros elementos */
+	}
 </style>

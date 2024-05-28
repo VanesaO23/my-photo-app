@@ -71,6 +71,11 @@
 		items = updatedItems;
 	}
 
+	function handleRemoveImage(image: Image) {
+		items = items.filter((item) => item.id !== image.id);
+		galleryImages.set(items.map(({ url }) => ({ url })));
+	}
+
 	onMount(() => {
 		document.addEventListener('dragend', handleDragEnd);
 	});
@@ -94,11 +99,14 @@
 					role="listitem"
 				>
 					<img src={item.url} alt="" class="image" />
+					<div class="overlay">
+						<button on:click={() => handleRemoveImage(item)}>Eliminar</button>
+					</div>
 				</div>
 			{/each}
 		</div>
 	{:else}
-		<p>No hay imágenes en la galería</p>
+		<p class="no-images-message">No hay imágenes en la galería</p>
 	{/if}
 </main>
 
@@ -119,6 +127,13 @@
 		border-radius: 10px;
 		background-color: #f0f0f0; /* Add a background color */
 		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add some shadow for better visibility */
+		transition:
+			transform 0.3s,
+			box-shadow 0.3s;
+	}
+	.image-container:hover {
+		transform: scale(1.02);
+		box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 	}
 	.image {
 		position: absolute;
@@ -138,5 +153,38 @@
 	.dnd-placeholder {
 		background-color: rgba(0, 0, 0, 0.1); /* Placeholder color */
 		border: 2px dashed rgba(0, 0, 0, 0.2); /* Placeholder border */
+	}
+	.overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.5);
+		color: white;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		opacity: 0;
+		transition: opacity 0.3s;
+	}
+	.image-container:hover .overlay {
+		opacity: 1;
+	}
+	.overlay button {
+		background-color: rgba(255, 255, 255, 0.7);
+		border: none;
+		padding: 10px 20px;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+	.overlay button:hover {
+		background-color: rgba(255, 255, 255, 1);
+	}
+	.no-images-message {
+		color: #555;
+		text-align: center;
+		margin-top: 20px;
+		font-size: 16px;
 	}
 </style>

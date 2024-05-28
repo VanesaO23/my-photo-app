@@ -1,67 +1,123 @@
 <script lang="ts">
-	let images: { url: string; name: string }[] = [];
+	import { images, addImage, removeImage, saveImageToGallery } from '../../stores/imageStore';
+	import { onMount } from 'svelte';
+	import { get } from 'svelte/store';
+
+	let newImageUrl = '';
+	let newImageFiles: File[] = [];
+
+	function handleAddImage() {
+		if (newImageUrl.trim()) {
+			addImage({ url: newImageUrl.trim() });
+			newImageUrl = ''; // Clear the input field
+		}
+
+		if (newImageFiles.length > 0) {
+			newImageFiles.forEach((file) => {
+				const reader = new FileReader();
+				reader.onload = () => {
+					addImage({ url: reader.result as string });
+				};
+				reader.readAsDataURL(file);
+			});
+			newImageFiles = []; // Clear the file input
+		}
+	}
 
 	function handleFileChange(event: Event) {
-		const target = event.target as HTMLInputElement;
-		if (target.files) {
-			const files: File[] = Array.from(target.files);
-			updateImages(files);
+		const input = event.target as HTMLInputElement;
+		if (input.files && input.files.length > 0) {
+			newImageFiles = Array.from(input.files);
 		}
 	}
 
-	function handleDragOver(event: DragEvent) {
-		event.preventDefault(); // Necessary to allow the drop
+	function handleRemoveImage(image: { url: string }) {
+		removeImage(image);
 	}
 
-	function handleDrop(event: DragEvent) {
-		event.preventDefault();
-		if (event.dataTransfer && event.dataTransfer.files) {
-			const files: File[] = Array.from(event.dataTransfer.files);
-			updateImages(files);
-		}
-	}
-
-	function updateImages(files: File[]) {
-		images = files.map((file) => {
-			return {
-				url: URL.createObjectURL(file),
-				name: file.name
-			};
-		});
+	function handleSaveImageToGallery(image: { url: string }) {
+		saveImageToGallery(image);
 	}
 </script>
 
-<main class="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-	<h1 class="text-3xl font-bold mb-4">Subida de Archivos</h1>
-	<p>Bienvenido a la página de subida de archivos.</p>
-	<!-- Single Input for file selection -->
-	<input type="file" multiple on:change={handleFileChange} class="my-4" />
-	<!-- Drag and drop area -->
-	<div
-		on:dragover={handleDragOver}
-		on:drop={handleDrop}
-		class="dropzone w-full md:w-1/2 lg:w-1/3 border-2 border-dashed border-gray-300 p-5 text-center cursor-pointer"
-		role="button"
-		aria-label="Dropzone area for uploading images by dragging and dropping files here"
-		tabindex="0"
-	>
-		Arrastra tus imágenes aquí
-		<div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-			{#each images as image}
-				<div class="overflow-hidden rounded-lg shadow-lg max-w-xs mx-auto">
-					<img src={image.url} alt={image.name} class="w-full h-auto object-cover" />
+<main>
+	<h1>Subir Fotos</h1>
+
+	<div class="input-container">
+		<input type="text" bind:value={newImageUrl} placeholder="Enter image URL" />
+		<input type="file" accept="image/*" multiple on:change={handleFileChange} />
+		<button on:click={handleAddImage}>Añadir Imagen</button>
+	</div>
+
+	{#if $images.length > 0}
+		<div class="gallery">
+			{#each $images as image}
+				<div class="image-container">
+					<img src={image.url} alt="" class="image" />
+					<div class="buttons">
+						<button on:click={() => handleRemoveImage(image)}>Remove</button>
+						<button on:click={() => handleSaveImageToGallery(image)}>Save to Gallery</button>
+					</div>
 				</div>
 			{/each}
 		</div>
-	</div>
+	{:else}
+		<p>No hay imágenes disponibles</p>
+	{/if}
 </main>
 
 <style>
 	main {
+		padding: 20px;
+	}
+	.input-container {
 		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		min-height: 40vh;
+		gap: 10px;
+		margin-bottom: 20px;
+	}
+	.gallery {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		gap: 20px;
+	}
+	.image-container {
+		position: relative;
+		width: 100%;
+		padding-top: 100%; /* 1:1 Aspect Ratio */
+		overflow: hidden;
+		border-radius: 10px;
+	}
+	.image {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover; /* Cover the container */
+		border-radius: 10px;
+	}
+	.buttons {
+		position: absolute;
+		bottom: 10px;
+		left: 10px;
+		right: 10px;
+		display: flex;
+		justify-content: space-between;
+		opacity: 0;
+		transition: opacity 0.3s;
+	}
+	.image-container:hover .buttons {
+		opacity: 1;
+	}
+	button {
+		background-color: rgba(0, 0, 0, 0.7);
+		color: white;
+		border: none;
+		padding: 5px 10px;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+	button:hover {
+		background-color: rgba(0, 0, 0, 0.9);
 	}
 </style>

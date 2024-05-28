@@ -47,13 +47,9 @@
 	}
 
 	.welcome img {
-		position: absolute;
-		width: 50%; /* Ajusta el ancho como necesites */
-		height: auto; /* Esto mantendrá la proporción de la imagen */
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		display: block;
-		z-index: -1; /* Coloca la imagen detrás de otros elementos */
+		width: 100%;
+		max-width: 600px;
+		height: auto;
+		margin-bottom: 20px;
 	}
 </style>

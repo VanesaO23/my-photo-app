@@ -11,7 +11,7 @@
 	</main>
 
 	<footer>
-		<p>Visita <a href="https://www.wikipedia.org/">wikipedia</a> para más información</p>
+		<p>Click <a href="https://www.pexels.com/es-es/">aquí </a> para explorar nuevas fotos</p>
 	</footer>
 </div>
 

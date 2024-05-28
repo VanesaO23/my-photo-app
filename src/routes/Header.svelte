@@ -3,16 +3,13 @@
 </script>
 
 <header>
+	<div class="logo">App de fotos</div>
 	<nav>
 		<ul>
-			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-				<a href="/">Inicio</a>
-			</li>
-			<li aria-current={$page.url.pathname === '/upload' ? 'page' : undefined}>
-				<a href="/upload">Subir Fotos</a>
-			</li>
-			<li aria-current={$page.url.pathname === '/gallery' ? 'page' : undefined}>
-				<a href="/gallery">Galería</a>
+			<li class={$page.url.pathname === '/' ? 'active' : ''}><a href="/">Inicio</a></li>
+			<li class={$page.url.pathname === '/upload' ? 'active' : ''}><a href="/upload">Añadir</a></li>
+			<li class={$page.url.pathname === '/gallery' ? 'active' : ''}>
+				<a href="/gallery">Galeria</a>
 			</li>
 		</ul>
 	</nav>
@@ -21,39 +18,35 @@
 <style>
 	header {
 		display: flex;
-		justify-content: center;
-		padding: 1rem;
+		justify-content: space-between;
+		align-items: center;
+		padding: 1rem 2rem;
 		background-color: #f3f4f6;
-		box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	}
-
+	.logo {
+		font-size: 1.5rem;
+		font-weight: bold;
+	}
 	nav ul {
 		list-style: none;
-		padding: 0;
-		margin: 0;
 		display: flex;
+		gap: 1rem;
 	}
-
 	nav li {
-		margin: 0 10px;
+		margin: 0;
 	}
-
 	nav a {
-		color: #333;
 		text-decoration: none;
-		font-weight: bold;
-		font-size: 16px;
-		padding: 0.5em 1em;
-	}
-
-	nav a:hover {
-		color: #007BFF;
-		background-color: #e3e4e6;
+		color: #333;
+		padding: 0.5rem 1rem;
 		border-radius: 4px;
 	}
-
-	li[aria-current='page'] a {
-		color: #007BFF;
-		border-bottom: 2px solid #007BFF;
+	nav a:hover {
+		background-color: #e3e4e6;
+	}
+	.active a {
+		font-weight: bold;
+		background-color: #e3e4e6;
 	}
 </style>

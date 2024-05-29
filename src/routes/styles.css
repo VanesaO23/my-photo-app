@@ -124,3 +124,8 @@ button:focus:not(:focus-visible) {
 	width: 1px;
 	white-space: nowrap;
 }
+@font-face {
+	font-family: 'Lato';
+	src: url('https://fonts.gstatic.com/s/lato/v24/S6uyw4BMUTPHjx4wXg.woff2') format('woff2');
+	font-display: swap;
+}

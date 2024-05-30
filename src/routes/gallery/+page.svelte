@@ -5,7 +5,7 @@
 	interface Image {
 		url: string;
 		id: number;
-		placeholder?: boolean; // Add the placeholder property
+		placeholder?: boolean;
 	}
 
 	let items: Image[] = $galleryImages.map((image, index) => ({ ...image, id: index }));
@@ -50,7 +50,7 @@
 			const [draggedItem] = updatedItems.splice(draggedFromIndex, 1);
 			updatedItems.splice(index, 0, draggedItem);
 			items = updatedItems;
-			// Actualizar el store galleryImages con el nuevo orden
+
 			galleryImages.set(items.map(({ url }) => ({ url })));
 		}
 		draggedIndex = null;
@@ -122,11 +122,11 @@
 	.image-container {
 		position: relative;
 		width: 100%;
-		padding-top: 100%; /* 1:1 Aspect Ratio */
+		padding-top: 100%;
 		overflow: hidden;
 		border-radius: 10px;
-		background-color: #f0f0f0; /* Add a background color */
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add some shadow for better visibility */
+		background-color: #f0f0f0;
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 		transition:
 			transform 0.3s,
 			box-shadow 0.3s;
@@ -141,18 +141,18 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		object-fit: cover; /* Cover the container */
+		object-fit: cover;
 		border-radius: 10px;
 	}
 	.dnd-dragging {
-		z-index: 10; /* Ensure dragged item is above other elements */
-		opacity: 0.8; /* Slight transparency for visual effect */
-		transform: scale(1.05); /* Slightly enlarge for visual effect */
+		z-index: 10;
+		opacity: 0.8;
+		transform: scale(1.05);
 	}
 
 	.dnd-placeholder {
-		background-color: rgba(0, 0, 0, 0.1); /* Placeholder color */
-		border: 2px dashed rgba(0, 0, 0, 0.2); /* Placeholder border */
+		background-color: rgba(0, 0, 0, 0.1);
+		border: 2px dashed rgba(0, 0, 0, 0.2);
 	}
 	.overlay {
 		position: absolute;

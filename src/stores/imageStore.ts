@@ -13,9 +13,7 @@ export function addImage(image: Image) {
 }
 
 export function removeImage(image: Image) {
-	galleryImages.update((currentGalleryImages) =>
-		currentGalleryImages.filter((img) => img.url !== image.url)
-	);
+	images.update((currentImages) => currentImages.filter((img) => img.url !== image.url));
 }
 
 export function saveImageToGallery(image: Image) {

@@ -69,6 +69,9 @@
 
 	<footer>
 		<p>Click <a href="https://www.pexels.com/es-es/">aquí </a> para explorar nuevas fotos</p>
+		<p>
+			Contactanos - <a href="https://www.App@fotoVann.com">App@fotoVann.com</a>
+		</p>
 	</footer>
 </div>
 

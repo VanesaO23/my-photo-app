@@ -10,7 +10,7 @@
 	function handleAddImage() {
 		if (newImageUrl.trim()) {
 			addImage({ url: newImageUrl.trim() });
-			newImageUrl = ''; // Clear the input field
+			newImageUrl = '';
 		}
 
 		if (newImageFiles.length > 0) {
@@ -21,8 +21,8 @@
 				};
 				reader.readAsDataURL(file);
 			});
-			newImageFiles = []; // Clear the file input
-			previewUrls = []; // Clear the preview URLs
+			newImageFiles = [];
+			previewUrls = [];
 		}
 	}
 
@@ -41,6 +41,16 @@
 	function handleSaveImageToGallery(image: { url: string }) {
 		saveImageToGallery(image);
 	}
+
+	function openImage(url: string) {
+		window.open(url, '_blank');
+	}
+
+	function handleKeyDown(event: KeyboardEvent, url: string) {
+		if (event.key === 'Enter' || event.key === ' ') {
+			openImage(url);
+		}
+	}
 </script>
 
 <main>
@@ -48,12 +58,14 @@
 
 	<div class="input-container">
 		<input
+			id="image-url"
 			type="text"
 			class="custom-input"
 			bind:value={newImageUrl}
 			placeholder="Ingrese URL de la imagen"
 		/>
 		<input
+			id="image-file"
 			type="file"
 			accept="image/*"
 			multiple
@@ -66,9 +78,14 @@
 	{#if previewUrls.length > 0}
 		<div class="preview-container">
 			{#each previewUrls as url}
-				<div class="preview-image-container">
+				<button
+					type="button"
+					class="preview-image-button"
+					on:click={() => openImage(url)}
+					on:keydown={(event) => handleKeyDown(event, url)}
+				>
 					<img src={url} alt="Previsualización de la imagen" class="preview-image" />
-				</div>
+				</button>
 			{/each}
 		</div>
 	{/if}
@@ -93,13 +110,24 @@
 <style>
 	main {
 		padding: 20px;
+		max-width: 1200px;
+		margin: 0 auto;
 	}
+
 	.input-container {
 		display: flex;
+		flex-direction: column;
 		gap: 10px;
 		margin-bottom: 20px;
-		align-items: center;
 	}
+
+	@media (min-width: 600px) {
+		.input-container {
+			flex-direction: row;
+			align-items: center;
+		}
+	}
+
 	.custom-input,
 	.custom-file-input,
 	.custom-button {
@@ -107,7 +135,9 @@
 		border-radius: 5px;
 		border: 1px solid #ccc;
 		font-size: 16px;
+		width: 100%;
 	}
+
 	.custom-input:focus,
 	.custom-file-input:focus,
 	.custom-button:focus {
@@ -115,45 +145,53 @@
 		border-color: #007bff;
 		box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 	}
+
 	.custom-button {
 		background-color: #007bff;
 		color: white;
 		border: none;
 		cursor: pointer;
+		width: auto;
 	}
+
 	.custom-button:hover {
 		background-color: #0056b3;
 	}
+
 	.gallery {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 		gap: 20px;
 	}
+
 	.image-container {
 		position: relative;
 		width: 100%;
-		padding-top: 100%; /* 1:1 Aspect Ratio */
+		padding-top: 100%;
 		overflow: hidden;
 		border-radius: 10px;
-		background-color: #f0f0f0; /* Add a background color */
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add some shadow for better visibility */
+		background-color: #f0f0f0;
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 		transition:
 			transform 0.3s,
 			box-shadow 0.3s;
 	}
+
 	.image-container:hover {
 		transform: scale(1.02);
 		box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 	}
+
 	.image {
 		position: absolute;
 		top: 0;
 		left: 0;
 		width: 100%;
 		height: 100%;
-		object-fit: cover; /* Cover the container */
+		object-fit: cover;
 		border-radius: 10px;
 	}
+
 	.buttons {
 		position: absolute;
 		bottom: 10px;
@@ -164,9 +202,11 @@
 		opacity: 0;
 		transition: opacity 0.3s;
 	}
+
 	.image-container:hover .buttons {
 		opacity: 1;
 	}
+
 	button {
 		background-color: rgba(0, 0, 0, 0.7);
 		color: white;
@@ -175,11 +215,11 @@
 		border-radius: 5px;
 		cursor: pointer;
 	}
+
 	button:hover {
 		background-color: rgba(0, 0, 0, 0.9);
 	}
 
-	/* Updated placeholder styling */
 	.custom-input::placeholder {
 		color: #000000;
 		opacity: 1;
@@ -189,15 +229,20 @@
 		display: flex;
 		gap: 10px;
 		margin-bottom: 20px;
+		flex-wrap: wrap;
 	}
-	.preview-image-container {
-		position: relative;
+
+	.preview-image-button {
+		all: unset;
 		width: 100px;
 		height: 100px;
-		overflow: hidden;
+		display: block;
 		border-radius: 10px;
+		overflow: hidden;
 		border: 1px solid #ccc;
+		cursor: pointer;
 	}
+
 	.preview-image {
 		width: 100%;
 		height: 100%;

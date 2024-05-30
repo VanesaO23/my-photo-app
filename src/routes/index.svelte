@@ -5,7 +5,7 @@
 		const fileList = event.target.files;
 		const urls = Array.from(fileList).map((file) => ({
 			url: URL.createObjectURL(file),
-			name: file.name // Guarda también el nombre del archivo
+			name: file.name
 		}));
 		imageUrls.set(urls);
 	}
